@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  title: Openstreetmap openapi-0.0
+  description: |-
+    Recycle map
+  version: 0.0.0
+servers:
+  - url: http://127.0.0.1:3102/api
+tags:
+  - name: markers
+    description: List of approved markers
+  - name: suggestions
+    description: Suggest marker
+
+paths:
+  /markers:
+    get:
+      tags:
+        - markers
+      summary: Get approved markers
+      description: Get approved markers
+      operationId: getMarkers
+      responses:
+        '200':
+          $ref: '#/components/responses/Markers'
+    post:
+      tags:
+        - suggestions
+      summary: Suggest a new marker
+      description: Suggest a new marker
+      operationId: suggestMarker
+      requestBody:
+          $ref: '#/components/requestBodies/NewMarker'
+      responses:
+        '201':
+          description: Created     
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /markers/{markerId}:
+    parameters:
+      - in: path
+        name: markerId
+        required: true
+        schema:
+          type: integer
+    patch:
+      tags:
+        - suggestions
+      summary: Update an existing marker
+      description: Update an existing marker
+      operationId: updateMarker
+      requestBody:
+          $ref: '#/components/requestBodies/UpdateMarker'
+      responses:
+        '204':
+          description: No Content    
+        '400':
+          $ref: '#/components/responses/BadRequest'
+
+components:
+  schemas:
+    BadRequestDetails:
+      type: object
+      properties:
+        location:
+          type: string
+          example: 'body'
+        msg:
+          type: string
+          example: 'Field is required'
+        param:
+          type: string
+          example: 'param'
+    BadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Invalid value'
+      additionalProperties:
+        $ref: '#/components/schemas/BadRequestDetails'
+    NewMarkerRequest:
+      required:
+        - position
+      type: object
+      properties:
+        position:
+          type: array
+          items:
+            type: number
+            example: [10.4, 10.4]
+    UpdateMarkerRequest:
+      required:
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          example: '57e7012c-2b6f-4e8b-ab86-e9fb91d4754e'
+        position:
+          type: array
+          items:
+            type: number
+            example: [10.4, 10.4]
+    MarkersResponse:
+      required:
+        - id
+        - position
+        - date
+      type: object
+      properties:
+        id:
+          type: string
+          example: '57e7012c-2b6f-4e8b-ab86-e9fb91d4754e'
+        position:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+              example: [[10.4, 10.4]]
+        date:
+          type: string
+          format: date-time
+          example: '2023-03-11T18:33:35.687+00:00'
+  requestBodies:
+    NewMarker:
+      description: New marker that needs to be added to the map
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewMarkerRequest'
+    UpdateMarker:
+      description: Update an existing marker
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UpdateMarkerRequest'
+  responses:
+    Markers:
+      description: List of markers
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/MarkersResponse'
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BadRequestError'

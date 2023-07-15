@@ -19,3 +19,11 @@ export const facadeRequest =
       next(e);
     }
   };
+export const createTypeErrorMsg = (fieldName: string, type = 'string') =>
+  `Field ${fieldName} must be ${type}`;
+
+export const createRequiredErrorMsg = (fieldName: string) =>
+  `Field ${fieldName} is required`;
+
+export const createContentErrorMsg = (fieldName: string, content: string) =>
+  `Field ${fieldName} must contain ${content}`;
