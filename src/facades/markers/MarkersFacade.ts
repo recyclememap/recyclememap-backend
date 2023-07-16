@@ -7,7 +7,7 @@ import { ApprovedMarkersList, NewMarker } from './types';
 export class MarkersFacade {
   static async getApprovedMarkers(): Promise<ApprovedMarkersList> {
     const approvedMarkers = await MarkersDB.find({
-      'position.aprovedValue': { $exists: true, $ne: [] }
+      'position.approvedValue': { $exists: true, $ne: [] }
     });
 
     const approvedMarkersDto = approvedMarkers.map(

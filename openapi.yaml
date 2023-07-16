@@ -71,6 +71,7 @@ components:
         param:
           type: string
           example: 'param'
+        value: {}
     BadRequestError:
       type: object
       properties:

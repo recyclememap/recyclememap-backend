@@ -12,7 +12,7 @@ export const newMarkerSchema = {
     },
     isArray: {
       options: { min: 2, max: 2 },
-      errorMessage: createTypeErrorMsg('directors', 'array with correct length')
+      errorMessage: createTypeErrorMsg('position', 'array with correct length')
     },
     custom: {
       options: (value: number[]) => {
