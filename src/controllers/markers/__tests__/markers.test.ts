@@ -142,7 +142,7 @@ describe('Markers controller', () => {
         });
     });
 
-    it('returns 400 if "position" doesn not contain numbers', async () => {
+    it('returns 400 if "position" does not contain numbers', async () => {
       await request(app)
         .post('/api/markers')
         .send({ position: ['1', '2'] })
