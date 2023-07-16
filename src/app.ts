@@ -26,4 +26,4 @@ app.use('/api', routes);
 app.use(errorHandler);
 app.use(defaultErrorHandler);
 
-app.set('port', process.env.PORT || 3102);
+app.set('port', process.env.PORT || 3100);
