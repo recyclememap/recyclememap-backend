@@ -91,7 +91,7 @@ describe('Markers controller', () => {
         });
     });
 
-    it('returns 400 if "position" is not array', async () => {
+    it('returns 400 if "position" is not an array', async () => {
       await request(app)
         .post('/api/markers')
         .send({ position: 'invalid' })
