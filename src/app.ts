@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express, { Router } from 'express';
 import { errorHandler, defaultErrorHandler } from '@utils/middleware';
+import { markers } from './controllers';
 
 dotenv.config();
 
@@ -19,8 +20,7 @@ app.use(
 
 // Routes
 const routes = Router();
-
-// routes.use('/', test);
+routes.use('/markers', markers);
 
 app.use('/api', routes);
 app.use(errorHandler);
