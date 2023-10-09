@@ -26,4 +26,4 @@ export const createRequiredErrorMsg = (fieldName: string) =>
   `Field ${fieldName} is required`;
 
 export const createContentErrorMsg = (fieldName: string, content: string) =>
-  `Field ${fieldName} must contain ${content}`;
+  `Field ${fieldName} must contain correct ${content}`;

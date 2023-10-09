@@ -17,11 +17,23 @@ export class MarkersFacade {
     return approvedMarkersDto;
   }
 
-  static async setMarker(newMarker: NewMarker): Promise<void> {
+  static async setMarker({
+    position,
+    wasteTypes,
+    address
+  }: NewMarker): Promise<void> {
     const markerDTO = new NewMarkerDto({
       position: {
-        suggestedValue: [newMarker.position],
+        suggestedValue: [position],
         approvedValue: []
+      },
+      wasteTypes: {
+        suggestedValue: [wasteTypes],
+        approvedValue: []
+      },
+      address: {
+        suggestedValue: [address],
+        approvedValue: ''
       },
       id: v4(),
       date: new Date().toISOString()

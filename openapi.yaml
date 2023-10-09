@@ -83,6 +83,8 @@ components:
     NewMarkerRequest:
       required:
         - position
+        - wasteTypes
+        - address
       type: object
       properties:
         position:
@@ -90,6 +92,13 @@ components:
           items:
             type: number
             example: [10.4, 10.4]
+        wasteTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/WasteTypes'
+        address:
+          type: string
+          example: 'street, 4'
     UpdateMarkerRequest:
       required:
         - id
@@ -107,6 +116,8 @@ components:
       required:
         - id
         - position
+        - wasteTypes
+        - address
         - date
       type: object
       properties:
@@ -116,14 +127,22 @@ components:
         position:
           type: array
           items:
-            type: array
-            items:
-              type: number
-              example: [[10.4, 10.4]]
+            type: number
+            example: [10.4, 10.4]
+        wasteTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/WasteTypes'
+        address:
+          type: string
+          example: 'street, 4'
         date:
           type: string
           format: date-time
           example: '2023-03-11T18:33:35.687+00:00'
+    WasteTypes:
+        type: string
+        enum: ['packing', 'plastic', 'batteries', 'carton', 'clothes', 'paper', 'glass']
   requestBodies:
     NewMarker:
       description: New marker that needs to be added to the map

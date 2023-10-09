@@ -30,7 +30,7 @@ export const createValidationError = (
   return {
     message: 'Invalid value',
     error: {
-      position: {
+      [param]: {
         msg,
         param,
         location,
