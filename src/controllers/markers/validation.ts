@@ -1,3 +1,4 @@
+import { AshdodCoordinates } from '@root/commons/constants';
 import { WasteTypes } from '@root/facades/markers/types';
 import { ApiError } from '@root/utils/errors';
 import {
@@ -18,6 +19,22 @@ export const newMarkerSchema = {
     custom: {
       options: (value: number[]) => {
         if (value.some((element) => typeof element !== 'number')) {
+          throw ApiError.BadRequest(
+            createContentErrorMsg('position', 'latitude and longitude')
+          );
+        }
+
+        const lat = value[0];
+        const lng = value[1];
+
+        console.log(lat, lng);
+
+        if (
+          lat < AshdodCoordinates.LatMin ||
+          lat > AshdodCoordinates.LatMax ||
+          lng < AshdodCoordinates.LngMin ||
+          lng > AshdodCoordinates.LngMax
+        ) {
           throw ApiError.BadRequest(
             createContentErrorMsg('position', 'latitude and longitude')
           );

@@ -135,6 +135,40 @@ describe('Markers controller', () => {
             );
           });
       });
+
+      it('returns 400 if "position" has lat and long less then allowed coordinates', async () => {
+        await request(app)
+          .post('/api/markers')
+          .send({ ...MOCK_NEW_MARKER, position: [31.751, 34.612] })
+          .expect(StatusCodes.BadRequest)
+          .then((res) => {
+            expect(extractValidationError(res)).toStrictEqual(
+              createValidationError(
+                'position',
+                'body',
+                createContentErrorMsg('position', 'latitude and longitude'),
+                { value: [31.751, 34.612] }
+              )
+            );
+          });
+      });
+
+      it('returns 400 if "position" has lat and long more then allowed coordinates', async () => {
+        await request(app)
+          .post('/api/markers')
+          .send({ ...MOCK_NEW_MARKER, position: [31.863, 34.704] })
+          .expect(StatusCodes.BadRequest)
+          .then((res) => {
+            expect(extractValidationError(res)).toStrictEqual(
+              createValidationError(
+                'position',
+                'body',
+                createContentErrorMsg('position', 'latitude and longitude'),
+                { value: [31.863, 34.704] }
+              )
+            );
+          });
+      });
     });
 
     describe('wasteTypes validation', () => {
