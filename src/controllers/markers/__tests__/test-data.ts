@@ -107,7 +107,7 @@ export const MOCK_APPROVED_MARKERS_RESPONSE = [
 ];
 
 export const MOCK_NEW_MARKER = {
-  position: [12.3, 45.6],
+  position: [31.755, 34.615],
   wasteTypes: [WasteTypes.Batteries, WasteTypes.Carton],
   address: 'test address'
 };
