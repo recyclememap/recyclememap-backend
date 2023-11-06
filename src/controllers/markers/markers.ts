@@ -3,7 +3,7 @@ import { checkSchema } from 'express-validator';
 import { StatusCodes } from '@root/commons/constants';
 import { MarkersFacade } from '@root/facades';
 import { facadeRequest } from '@root/utils/helpers';
-import { newMarkerSchema } from './validation';
+import { newMarkerSchema, updateMarkerSchema } from './validation';
 
 export const markers = Router();
 
@@ -29,5 +29,18 @@ markers.post(
     await MarkersFacade.setMarker(req.body);
 
     res.sendStatus(StatusCodes.Created);
+  })
+);
+
+/*
+ * PATCH /markers/:markerId
+ */
+markers.patch(
+  '/:markerId',
+  checkSchema(updateMarkerSchema),
+  facadeRequest(async (req, res) => {
+    await MarkersFacade.updateMarker(req);
+
+    res.sendStatus(StatusCodes.NoContent);
   })
 );

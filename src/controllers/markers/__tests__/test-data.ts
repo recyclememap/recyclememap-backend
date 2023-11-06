@@ -128,3 +128,30 @@ export const MOCK_DB_NEW_MARKER = {
   },
   date: '2023-07-15T21:37:05.406Z'
 };
+
+export const MOCK_SUGGESTION_MARKER = {
+  position: [31.758, 34.616],
+  wasteTypes: [WasteTypes.Plastic],
+  address: 'New address'
+};
+
+export const MOCK_UPDATED_MARKER = {
+  id: 'testId2',
+  position: {
+    suggestedValue: [[123, 456], MOCK_SUGGESTION_MARKER.position],
+    approvedValue: [1.4, 0.1]
+  },
+  wasteTypes: {
+    suggestedValue: [
+      [WasteTypes.Batteries, WasteTypes.Carton],
+      [WasteTypes.Packing],
+      MOCK_SUGGESTION_MARKER.wasteTypes
+    ],
+    approvedValue: [WasteTypes.Carton]
+  },
+  address: {
+    suggestedValue: ['suggestedAddress', MOCK_SUGGESTION_MARKER.address],
+    approvedValue: 'approvedAddress'
+  },
+  date: '2023-08-15T21:37:05.406Z'
+};
