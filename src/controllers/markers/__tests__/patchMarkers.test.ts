@@ -77,7 +77,7 @@ describe('PATCH /api/markers/:markerId', () => {
       });
   });
 
-  it('returns 404 if there is no such marker in data base', async () => {
+  it('returns 404 if there is no such marker in database', async () => {
     await insertDataToDB(MARKERS_DB_NAME, MOCK_DB_MARKERS, markersSchema);
 
     await request(app)
