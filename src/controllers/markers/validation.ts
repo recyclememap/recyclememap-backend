@@ -7,6 +7,59 @@ import {
   createContentErrorMsg
 } from '@utils/helpers';
 
+const positionValidation = (position: number[]) => {
+  if (position.some((coordinate) => typeof coordinate !== 'number')) {
+    throw ApiError.BadRequest(
+      createContentErrorMsg('position', 'latitude and longitude')
+    );
+  }
+
+  const lat = position[0];
+  const lng = position[1];
+
+  if (
+    lat < AshdodCoordinates.LatMin ||
+    lat > AshdodCoordinates.LatMax ||
+    lng < AshdodCoordinates.LngMin ||
+    lng > AshdodCoordinates.LngMax
+  ) {
+    throw ApiError.BadRequest(
+      createContentErrorMsg('position', 'latitude and longitude')
+    );
+  }
+
+  return true;
+};
+
+const wasteTypesVaildation = (wasteTypes: WasteTypes[]) => {
+  if (wasteTypes.length > 1) {
+    const uniqueValues = new Set(wasteTypes);
+
+    if (uniqueValues.size !== wasteTypes.length) {
+      throw ApiError.BadRequest(
+        createContentErrorMsg('wasteTypes', 'unique values')
+      );
+    }
+  }
+
+  wasteTypes.forEach((wasteType) => {
+    if (!Object.values(WasteTypes).includes(wasteType)) {
+      throw ApiError.BadRequest(createContentErrorMsg('wasteTypes', 'values'));
+    }
+  });
+
+  return true;
+};
+
+const addressValidation = (address: string) => {
+  if (!address.trim()) {
+    throw ApiError.BadRequest(
+      createContentErrorMsg('address', 'non-empty value')
+    );
+  }
+  return true;
+};
+
 export const newMarkerSchema = {
   position: {
     exists: {
@@ -17,31 +70,7 @@ export const newMarkerSchema = {
       errorMessage: createTypeErrorMsg('position', 'array with correct length')
     },
     custom: {
-      options: (value: number[]) => {
-        if (value.some((element) => typeof element !== 'number')) {
-          throw ApiError.BadRequest(
-            createContentErrorMsg('position', 'latitude and longitude')
-          );
-        }
-
-        const lat = value[0];
-        const lng = value[1];
-
-        console.log(lat, lng);
-
-        if (
-          lat < AshdodCoordinates.LatMin ||
-          lat > AshdodCoordinates.LatMax ||
-          lng < AshdodCoordinates.LngMin ||
-          lng > AshdodCoordinates.LngMax
-        ) {
-          throw ApiError.BadRequest(
-            createContentErrorMsg('position', 'latitude and longitude')
-          );
-        }
-
-        return true;
-      }
+      options: positionValidation
     }
   },
   wasteTypes: {
@@ -56,27 +85,7 @@ export const newMarkerSchema = {
       )
     },
     custom: {
-      options: (wasteTypes: WasteTypes[]) => {
-        if (wasteTypes.length > 1) {
-          const uniqueValues = new Set(wasteTypes);
-
-          if (uniqueValues.size !== wasteTypes.length) {
-            throw ApiError.BadRequest(
-              createContentErrorMsg('wasteTypes', 'unique values')
-            );
-          }
-        }
-
-        wasteTypes.forEach((wasteType) => {
-          if (!Object.values(WasteTypes).includes(wasteType)) {
-            throw ApiError.BadRequest(
-              createContentErrorMsg('wasteTypes', 'values')
-            );
-          }
-        });
-
-        return true;
-      }
+      options: wasteTypesVaildation
     }
   },
   address: {
@@ -85,14 +94,42 @@ export const newMarkerSchema = {
       errorMessage: createTypeErrorMsg('address', 'string')
     },
     custom: {
-      options: (value: string) => {
-        if (!value.trim()) {
-          throw ApiError.BadRequest(
-            createContentErrorMsg('address', 'non-empty value')
-          );
-        }
-        return true;
-      }
+      options: addressValidation
+    }
+  }
+};
+
+export const updateMarkerSchema = {
+  position: {
+    optional: { options: { nullable: true } },
+    isArray: {
+      options: { min: 2, max: 2 },
+      errorMessage: createTypeErrorMsg('position', 'array with correct length')
+    },
+    custom: {
+      options: positionValidation
+    }
+  },
+  wasteTypes: {
+    optional: { options: { nullable: true } },
+    isArray: {
+      options: { min: 1 },
+      errorMessage: createTypeErrorMsg(
+        'wasteTypes',
+        'array with correct length'
+      )
+    },
+    custom: {
+      options: wasteTypesVaildation
+    }
+  },
+  address: {
+    optional: { options: { nullable: true } },
+    isString: {
+      errorMessage: createTypeErrorMsg('address', 'string')
+    },
+    custom: {
+      options: addressValidation
     }
   }
 };
