@@ -7,6 +7,8 @@ import {
   createContentErrorMsg
 } from '@utils/helpers';
 
+const MAX_ADDRESS_LENGTH = 70;
+
 const positionValidation = (position: number[]) => {
   if (position.some((coordinate) => typeof coordinate !== 'number')) {
     throw ApiError.BadRequest(
@@ -93,6 +95,10 @@ export const newMarkerSchema = {
     isString: {
       errorMessage: createTypeErrorMsg('address', 'string')
     },
+    isLength: {
+      options: { max: MAX_ADDRESS_LENGTH },
+      errorMessage: createTypeErrorMsg('address', 'string')
+    },
     custom: {
       options: addressValidation
     }
@@ -126,6 +132,10 @@ export const updateMarkerSchema = {
   address: {
     optional: { options: { nullable: true } },
     isString: {
+      errorMessage: createTypeErrorMsg('address', 'string')
+    },
+    isLength: {
+      options: { max: MAX_ADDRESS_LENGTH },
       errorMessage: createTypeErrorMsg('address', 'string')
     },
     custom: {

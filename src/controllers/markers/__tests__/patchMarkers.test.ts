@@ -15,7 +15,8 @@ import {
   MOCK_DB_MARKERS,
   MARKERS_DB_NAME,
   MOCK_SUGGESTION_MARKER,
-  MOCK_UPDATED_MARKER
+  MOCK_UPDATED_MARKER,
+  LONG_ADDRESS
 } from './test-data';
 
 describe('PATCH /api/markers/:markerId', () => {
@@ -292,6 +293,23 @@ describe('PATCH /api/markers/:markerId', () => {
               'body',
               createTypeErrorMsg('address', 'string'),
               { value: 123 }
+            )
+          );
+        });
+    });
+
+    it('returns 400 if "address" length is more than 70 characters', async () => {
+      await request(app)
+        .post('/api/markers')
+        .send({ ...MOCK_SUGGESTION_MARKER, address: LONG_ADDRESS })
+        .expect(StatusCodes.BadRequest)
+        .then((res) => {
+          expect(extractValidationError(res)).toStrictEqual(
+            createValidationError(
+              'address',
+              'body',
+              createTypeErrorMsg('address', 'string'),
+              { value: LONG_ADDRESS }
             )
           );
         });
