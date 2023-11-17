@@ -17,7 +17,8 @@ import { connectDB, dropDB, dropCollections } from '@utils/tests/dbConnection';
 import {
   MOCK_NEW_MARKER,
   MARKERS_DB_NAME,
-  MOCK_DB_NEW_MARKER
+  MOCK_DB_NEW_MARKER,
+  LONG_ADDRESS
 } from './test-data';
 
 describe('Markers controller', () => {
@@ -308,6 +309,23 @@ describe('Markers controller', () => {
                 'body',
                 createTypeErrorMsg('address', 'string'),
                 { value: 123 }
+              )
+            );
+          });
+      });
+
+      it('returns 400 if "address" length is more than 70 characters', async () => {
+        await request(app)
+          .post('/api/markers')
+          .send({ ...MOCK_NEW_MARKER, address: LONG_ADDRESS })
+          .expect(StatusCodes.BadRequest)
+          .then((res) => {
+            expect(extractValidationError(res)).toStrictEqual(
+              createValidationError(
+                'address',
+                'body',
+                createTypeErrorMsg('address', 'string'),
+                { value: LONG_ADDRESS }
               )
             );
           });

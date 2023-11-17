@@ -155,3 +155,6 @@ export const MOCK_UPDATED_MARKER = {
   },
   date: '2023-08-15T21:37:05.406Z'
 };
+
+export const LONG_ADDRESS =
+  'This is a test string with more than 70 characters, which is not valid!';
