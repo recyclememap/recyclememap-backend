@@ -16,4 +16,4 @@ Backend service uses `MongoDB` as the database to store recycling points
 
 * set up `.env` file
 * `pnpm install` - install dependecies
-* `pnpm run` - run the server (http://127.0.0.1:3100)
+* `pnpm start` - run the server (http://127.0.0.1:3100)
