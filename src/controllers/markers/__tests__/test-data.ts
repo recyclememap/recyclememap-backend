@@ -83,7 +83,7 @@ export const MOCK_SUGGESTED_DB_MARKERS = [
     },
     address: {
       suggestedValue: ['suggestedAddress'],
-      approvedValue: []
+      approvedValue: ''
     },
     date: '2023-07-15T21:37:05.406Z'
   }
@@ -103,6 +103,16 @@ export const MOCK_APPROVED_MARKERS_RESPONSE = [
     wasteTypes: [WasteTypes.Batteries],
     address: 'approvedAddress',
     date: '2023-09-15T21:37:05.406Z'
+  }
+];
+
+export const MOCK_FILTERED_MARKERS_RESPONSE = [
+  {
+    id: 'testId2',
+    position: [1.4, 0.1],
+    wasteTypes: [WasteTypes.Carton],
+    address: 'approvedAddress',
+    date: '2023-08-15T21:37:05.406Z'
   }
 ];
 

@@ -14,7 +14,8 @@ const config = {
     '^@controllers(.*)$': '<rootDir>/src/controllers$1',
     '^@facades(.*)$': '<rootDir>/src/facades$1',
     '^@model(.*)$': '<rootDir>/src/model$1'
-  }
+  },
+  testPathIgnorePatterns: ['<rootDir>/build/']
 };
 
 module.exports = config;

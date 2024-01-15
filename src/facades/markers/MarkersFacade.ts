@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { v4 } from 'uuid';
 import { MarkersDB } from '@model/schemas';
+import { GenericObject } from '@root/commons/types';
 import { MarkerDto, NewMarkerDto } from '@root/dtos';
 import { DBMarker } from '@root/dtos/markersDto/types';
 import { ApiError } from '@root/utils/errors';
@@ -13,10 +14,18 @@ import {
 } from './types';
 
 export class MarkersFacade {
-  static async getApprovedMarkers(): Promise<ApprovedMarkersList> {
-    const approvedMarkers = await MarkersDB.find({
+  static async getApprovedMarkers(
+    wasteTypes: string
+  ): Promise<ApprovedMarkersList> {
+    const query: GenericObject = {
       'position.approvedValue': { $exists: true, $ne: [] }
-    }).exec();
+    };
+
+    if (wasteTypes) {
+      query['wasteTypes.approvedValue'] = { $in: wasteTypes.split(',') };
+    }
+
+    const approvedMarkers = await MarkersDB.find(query).exec();
 
     const approvedMarkersDto = approvedMarkers.map(
       (marker) => new MarkerDto(marker as DBMarker)

@@ -143,3 +143,23 @@ export const updateMarkerSchema = {
     }
   }
 };
+
+export const getMarkersSchema = {
+  wasteTypes: {
+    optional: { options: { nullable: true } },
+    isString: {
+      errorMessage: createTypeErrorMsg('wasteTypes', 'string')
+    },
+    custom: {
+      options: (value: string) => {
+        if (value) {
+          const wasteTypes = value.split(',');
+
+          return wasteTypesVaildation(wasteTypes as WasteTypes[]);
+        }
+
+        return true;
+      }
+    }
+  }
+};
