@@ -3,7 +3,11 @@ import { checkSchema } from 'express-validator';
 import { StatusCodes } from '@root/commons/constants';
 import { MarkersFacade } from '@root/facades';
 import { facadeRequest } from '@root/utils/helpers';
-import { newMarkerSchema, updateMarkerSchema } from './validation';
+import {
+  getMarkersSchema,
+  newMarkerSchema,
+  updateMarkerSchema
+} from './validation';
 
 export const markers = Router();
 
@@ -12,8 +16,12 @@ export const markers = Router();
  */
 markers.get(
   '',
+  checkSchema(getMarkersSchema, ['query']),
   facadeRequest(async (req, res) => {
-    const markersList = await MarkersFacade.getApprovedMarkers();
+    const { wasteTypes } = req.query;
+    const markersList = await MarkersFacade.getApprovedMarkers(
+      wasteTypes as string
+    );
 
     res.status(StatusCodes.Ok).send(markersList);
   })

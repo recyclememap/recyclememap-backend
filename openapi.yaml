@@ -20,6 +20,8 @@ paths:
       summary: Get approved markers
       description: Get approved markers
       operationId: getMarkers
+      parameters:
+        - $ref: '#/components/parameters/GetMarkersParams'
       responses:
         '200':
           $ref: '#/components/responses/Markers'
@@ -143,6 +145,18 @@ components:
     WasteTypes:
         type: string
         enum: ['packing', 'plastic', 'batteries', 'carton', 'clothes', 'paper', 'glass']
+  parameters:
+    GetMarkersParams:
+      in: query
+      name: wasteTypes
+      schema:
+        type: array
+        items:
+          type: string
+          enum: ['packing', 'plastic', 'batteries', 'carton', 'clothes', 'paper', 'glass']
+      style: form
+      explode: false
+      required: false
   requestBodies:
     NewMarker:
       description: New marker that needs to be added to the map
