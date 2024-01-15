@@ -88,7 +88,7 @@ describe('Markers controller', () => {
           });
       });
 
-      it('returns 400 if wasteTypes in query are invalid', async () => {
+      it('returns 400 if wasteTypes in query are not unique', async () => {
         await insertDataToDB(MARKERS_DB_NAME, MOCK_DB_MARKERS, markersSchema);
 
         await request(app)
