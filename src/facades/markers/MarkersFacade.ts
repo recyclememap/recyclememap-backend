@@ -52,6 +52,10 @@ export class MarkersFacade {
         suggestedValue: [address],
         approvedValue: ''
       },
+      isPointAvailable: {
+        suggestedValue: [],
+        approvedValue: true
+      },
       id: v4(),
       date: new Date().toISOString()
     });

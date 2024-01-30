@@ -1,9 +1,8 @@
-import { MakePartial } from '@commons/types';
-
 export enum MarkerProperties {
   position = 'position',
   wasteTypes = 'wasteTypes',
-  address = 'address'
+  address = 'address',
+  isPointAvailable = 'isPointAvailable'
 }
 
 export enum WasteTypes {
@@ -22,6 +21,7 @@ export type ApprovedMarker = {
   wasteTypes: WasteTypes[];
   address: string;
   date: string;
+  isPointAvailable: boolean;
 };
 
 export type ApprovedMarkersList = ApprovedMarker[];
@@ -32,7 +32,9 @@ export type NewMarker = {
   address: string;
 };
 
-export type SuggestedMarker = MakePartial<NewMarker>;
+export type SuggestedMarker = Partial<
+  NewMarker & { isPointAvailable: boolean }
+>;
 
 export type Marker = {
   id: string;
@@ -47,6 +49,10 @@ export type Marker = {
   address: {
     suggestedValue: string[];
     approvedValue: string;
+  };
+  isPointAvailable: {
+    suggestedValue: boolean[];
+    approvedValue: boolean;
   };
   date: string;
 };

@@ -141,6 +141,12 @@ export const updateMarkerSchema = {
     custom: {
       options: addressValidation
     }
+  },
+  isPointAvailable: {
+    optional: { options: { nullable: true } },
+    isBoolean: {
+      errorMessage: createTypeErrorMsg('isPointAvailable', 'boolean')
+    }
   }
 };
 

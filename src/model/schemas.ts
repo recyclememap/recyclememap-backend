@@ -36,6 +36,16 @@ export const markersSchema = new Schema({
       default: ''
     }
   },
+  isPointAvailable: {
+    suggestedValue: {
+      type: [Boolean],
+      required: true
+    },
+    approvedValue: {
+      type: Boolean,
+      required: true
+    }
+  },
   date: {
     type: String,
     required: true

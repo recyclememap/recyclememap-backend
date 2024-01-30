@@ -7,6 +7,7 @@ export class MarkerDto {
   date: string;
   wasteTypes: WasteTypes[];
   address: string;
+  isPointAvailable: boolean;
 
   constructor(marker: DBMarker) {
     this.id = marker.id;
@@ -14,6 +15,7 @@ export class MarkerDto {
     this.wasteTypes = marker.wasteTypes.approvedValue;
     this.address = marker.address.approvedValue;
     this.date = marker.date;
+    this.isPointAvailable = marker.isPointAvailable.approvedValue;
   }
 }
 
@@ -31,6 +33,10 @@ export class NewMarkerDto {
     suggestedValue: string[];
     approvedValue: string;
   };
+  isPointAvailable: {
+    suggestedValue: boolean[];
+    approvedValue: boolean;
+  };
   date: string;
 
   constructor(marker: DBMarker) {
@@ -39,5 +45,6 @@ export class NewMarkerDto {
     this.date = marker.date;
     this.wasteTypes = marker.wasteTypes;
     this.address = marker.address;
+    this.isPointAvailable = marker.isPointAvailable;
   }
 }

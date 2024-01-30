@@ -14,5 +14,9 @@ export type DBMarker = {
     suggestedValue: string[];
     approvedValue: string;
   };
+  isPointAvailable: {
+    suggestedValue: boolean[];
+    approvedValue: boolean;
+  };
   date: string;
 };
